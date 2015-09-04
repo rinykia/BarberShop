@@ -19,11 +19,12 @@ post '/visit' do
   @phone = params[:phone]
   @datetime = params[:datetime]
   @master = params[:master]
+  @colorpicker = params[:colorpicker]
 
   @title = 'Thank you!'
-  @message = "Dear #{@username},I am #{@master}, I'll be waiting you at #{@datetime}"
+  @message = "Dear #{@username},I am #{@master}, I'll be waiting you at #{@datetime}, Color: #{@colorpicker}"
   f = File.open './public/users.txt', 'a'
-  f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, #{@master}"
+  f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, #{@master}, Color: #{@colorpicker}"
   f.close
   erb :message
 end
