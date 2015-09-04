@@ -26,16 +26,13 @@ post '/visit' do
   	   :phone => 'Type phone', 
   	   :datetime => 'Type date and time'} 
 
-  h.each do |k, v|
-    if params[k] == ''
-      @error = h[k]
-      
-      return erb :visit
-    end
+  @error = h.select {|k,_| params[k] == ""}.values.join(", ")
+  if @error != ''
+  	return erb :visit
   end
 
   @title = 'Thank you!'
-  @message = "Dear #{@username},I am #{@master}, I'll be waiting you at #{@datetime}, Color: #{@colorpicker}"
+  @message = "Dear #{@username},#{@master}, will waiting you at #{@datetime},(Color: #{@colorpicker})"
   f = File.open './public/users.txt', 'a'
   f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, #{@master}, Color: #{@colorpicker}; "
   f.close
