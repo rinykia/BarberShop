@@ -22,9 +22,16 @@ post '/visit' do
   @master = params[:master]
   @colorpicker = params[:colorpicker]
 
-  if @username == ''
-  	@error = 'ERROR! Type name! Please!'
-  	return erb :visit
+  h = {:username => 'Type name', 
+  	   :phone => 'Type phone', 
+  	   :datetime => 'Type date and time'} 
+
+  h.each do |k, v|
+    if params[k] == ''
+      @error = h[k]
+      
+      return erb :visit
+    end
   end
 
   @title = 'Thank you!'
