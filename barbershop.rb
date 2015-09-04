@@ -7,11 +7,12 @@ get '/' do
 end
 
 get '/about' do
-	erb :about
+  @error = 'ERROR!'
+  erb :about
 end
 
 get '/visit' do
-	erb :visit
+  erb :visit
 end
 
 post '/visit' do
@@ -21,35 +22,39 @@ post '/visit' do
   @master = params[:master]
   @colorpicker = params[:colorpicker]
 
+  if @username == ''
+  	@error = 'ERROR! Type name! Please!'
+  	return erb :visit
+  end
+
   @title = 'Thank you!'
   @message = "Dear #{@username},I am #{@master}, I'll be waiting you at #{@datetime}, Color: #{@colorpicker}"
   f = File.open './public/users.txt', 'a'
-  f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, #{@master}, Color: #{@colorpicker}"
+  f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, #{@master}, Color: #{@colorpicker}; "
   f.close
   erb :message
 end
 
 get '/message' do
-	erb :message
+  erb :message
 end
 
 get '/contacts' do
-	erb :contacts
+  erb :contacts
 end
 
 post '/contacts' do
-	@email = params[:email]
-	@message = params[:message]
+  @email = params[:email]
+  @message = params[:message]
+ 
+  a = File.open './public/contacts.txt', 'a'
+  a.write "Email: #{@email}, message: #{@message}"
+  a.close
 
-	a = File.open './public/contacts.txt', 'a'
-	a.write "Email: #{@email}, message: #{@message}"
-	a.close
-
-	@title = 'Thank you!'
-    @message = "Your message will be sending, we answer for you email: #{@email}"
-    erb :message
+  @title = 'Thank you!'
+  @message = "Your message will be sending, we answer for you email: #{@email}"
+  erb :message
 end
-
 
 
 
