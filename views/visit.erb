@@ -20,11 +20,10 @@
   <div class="form-group">
   <label>Выберите мастера</label>
     <select name="master" class="form-control">
-      <option disabled selected="selected">Выберите мастера</option>
-      <option>Чебурашка </option>
-      <option>Крокодил Гена </option>
-      <option>Шапокляк </option>
-      <option>Крыса Лариса </option>
+      <option <%= @master == 'Chebyrashka' ? 'selected' : '' %>>Chebyrashka</option>
+      <option <%= @master == 'Aligator Gennadiuy' ? 'selected' : '' %>>Aligator Gennadiuy </option>
+      <option <%= @master == 'Shapoklyak' ? 'selected' : '' %>>Shapoklyak</option>
+      <option <%= @master == 'Krusa Larisa' ? 'selected' : '' %>>Krusa Larisa</option>
     </select><br/>
   </div>
 
