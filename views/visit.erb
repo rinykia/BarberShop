@@ -14,7 +14,7 @@
 
   <div class="form-group">
     <label>Дата и время</label>
-    <input name="datetime" type="text" class="form-control" placeholder="Дата и время" value="<%= @datetime %>">
+    <input id="datetimepicker" name="datetime" type="text" class="form-control" placeholder="Дата и время" value="<%= @datetime %>">
   </div>
 
   <div class="form-group">
@@ -55,6 +55,7 @@
  $(function(){
   $('#name').css('background-color', 'yellow');
   $('select[name="colorpicker"]').simplecolorpicker();
+  $('#datetimepicker').datetimepicker();
  })
  </script>
 
