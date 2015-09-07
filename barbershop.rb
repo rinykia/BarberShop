@@ -1,28 +1,29 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-
-
 require 'sqlite3'
 
-db = SQLite3::Database.new 'users.sqlite'
 
-db.execute "SELECT * FROM Users" do |x|
-	puts x
-	puts "===="
+def get_db
+	db = SQLite3::Database.new 'barbershop.db'
+	db.results_as_hash = true
+	return db
 end
 
-db.close
-
-db1 = SQLite3::Database.new 'contacts.sqlite'
-
-db1.execute "SELECT * FROM Contacts" do |x|
-	puts x
-	puts "===="
+configure do
+  db = get_db
+  db.execute 'CREATE TABLE IF NOT EXISTS
+  "Users"
+	(
+	  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+	  "username" TEXT,
+	  "phone" TEXT,
+	  "datetime" TEXT,
+	  "master" TEXT,
+	  "colorpicker" TEXT
+	)'
 end
 
-db1.close
-#
 get '/' do
   erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"     
 end
@@ -52,13 +53,22 @@ post '/visit' do
   	return erb :visit
   end
 
-  @title = 'Thank you!'
-  @message = "Dear #{@username},#{@master}, will waiting you at #{@datetime},(Color: #{@colorpicker})"
-  f = File.open './public/users.txt', 'a'
-  f.write "User: #{@username}, Phone: #{@phone}, Date and time: #{@datetime}, #{@master}, Color: #{@colorpicker}; "
-  f.close
-  erb :message
+
+db = get_db
+	db.execute 'insert into
+		Users
+		(
+			username,
+			phone,
+			datetime,
+			master,
+			colorpicker
+		)
+		values (?, ?, ?, ?, ?)', [@username, @phone, @datetime, @master, @colorpicker]
+
+  erb "Ok, username is #{@username}, #{@phone}, #{@datetime}, #{@master}, #{@colorpicker}"
 end
+
 
 get '/message' do
   erb :message
@@ -88,6 +98,7 @@ post '/contacts' do
   @message = "Your message will be sending, we answer for you email: #{@email}"
   erb :message
 end
+
 
 
 
