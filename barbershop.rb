@@ -2,6 +2,27 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 
+
+require 'sqlite3'
+
+db = SQLite3::Database.new 'users.sqlite'
+
+db.execute "SELECT * FROM Users" do |x|
+	puts x
+	puts "===="
+end
+
+db.close
+
+db1 = SQLite3::Database.new 'contacts.sqlite'
+
+db1.execute "SELECT * FROM Contacts" do |x|
+	puts x
+	puts "===="
+end
+
+db1.close
+#
 get '/' do
   erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"     
 end
@@ -50,6 +71,14 @@ end
 post '/contacts' do
   @email = params[:email]
   @message = params[:message]
+
+   h1 = {:email => 'Type email', 
+  	   :message => 'Type message'} 
+
+  @error = h1.select {|k,_| params[k] == ""}.values.join(", ")
+  if @error != ''
+  	return erb :contacts
+  end
  
   a = File.open './public/contacts.txt', 'a'
   a.write "Email: #{@email}, message: #{@message}"
