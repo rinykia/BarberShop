@@ -97,7 +97,7 @@ db = get_db
 	)
 	values (?, ?, ?, ?, ?)', [@username, @phone, @datetime, @master, @colorpicker]
 
-  erb "Ok, username is #{@username}, #{@phone}, #{@datetime}, #{@master}, #{@colorpicker}"
+	erb "<h2>Thanks, We wait you in our BarberShop!</h2>"
 end
 
 

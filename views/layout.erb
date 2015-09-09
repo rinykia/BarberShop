@@ -44,14 +44,15 @@
 		  <ul class="nav navbar-nav">
 			<li><a href="/about">О нас</a></li>
 			<li><a href="/visit">Записаться</a></li>
+			<li><a href="/showusers">Список пользователей</a></li>
 			<li><a href="/contacts">Контакты</a></li>
 		  </ul>
 		</div><!--/.nav-collapse -->
 	  </nav>
 	  <!-- вывод ошибок -->
 	  <div>
-		<%if @error then %>
-		  <div class="alert alert-danger"><%=@error%></div>
+		<% if @error && @error.length > 0 then %>
+		  <div class="alert alert-danger"><%= @error %></div>
 		<% end %>
 		<%= yield %>
 	  </div>
