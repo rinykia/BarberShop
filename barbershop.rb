@@ -5,9 +5,9 @@ require 'sqlite3'
 
 
 def get_db
-	db = SQLite3::Database.new 'barbershop.db'
-	db.results_as_hash = true
-	return db
+  db = SQLite3::Database.new 'barbershop.db'
+  db.results_as_hash = true
+  return db
 end
 
 configure do
@@ -55,16 +55,16 @@ post '/visit' do
 
 
 db = get_db
-	db.execute 'insert into
-		Users
-		(
-			username,
-			phone,
-			datetime,
-			master,
-			colorpicker
-		)
-		values (?, ?, ?, ?, ?)', [@username, @phone, @datetime, @master, @colorpicker]
+  db.execute 'insert into
+	Users
+	(
+	  username,
+	  phone,
+	  datetime,
+	  master,
+	  colorpicker
+	)
+	values (?, ?, ?, ?, ?)', [@username, @phone, @datetime, @master, @colorpicker]
 
   erb "Ok, username is #{@username}, #{@phone}, #{@datetime}, #{@master}, #{@colorpicker}"
 end
@@ -99,6 +99,13 @@ post '/contacts' do
   erb :message
 end
 
+get '/showusers' do
+  db = get_db
+
+  @results = db.execute 'select * from Users order by id desc'
+
+  erb :showusers
+end
 
 
 
