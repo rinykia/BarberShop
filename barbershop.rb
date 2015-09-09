@@ -21,6 +21,11 @@ def get_db
   return db
 end
 
+before do 
+  db = get_db
+  @masters = db.execute 'select * from Masters'
+end
+
 configure do
   db = get_db
 
@@ -56,6 +61,10 @@ get '/about' do
 end
 
 get '/visit' do
+  db = get_db
+
+  @barbers = db.execute 'select * from Users order by id desc'
+
   erb :visit
 end
 

@@ -20,10 +20,14 @@
   <div class="form-group">
   <label>Выберите мастера</label>
     <select name="master" class="form-control">
-      <option <%= @master == 'Chebyrashka' ? 'selected' : '' %>>Chebyrashka</option>
+    <!--  <option <%= @master == 'Chebyrashka' ? 'selected' : '' %>>Chebyrashka</option>
       <option <%= @master == 'Aligator Gennadiuy' ? 'selected' : '' %>>Aligator Gennadiuy </option>
       <option <%= @master == 'Shapoklyak' ? 'selected' : '' %>>Shapoklyak</option>
       <option <%= @master == 'Krusa Larisa' ? 'selected' : '' %>>Krusa Larisa</option>
+    -->
+       <% @masters.each do |item| %>
+        <option <%= @master == item['name'] ? 'selected' : '' %>><%= item['name'] %></option>
+       <% end %>
     </select><br/>
   </div>
 
