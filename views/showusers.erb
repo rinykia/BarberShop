@@ -1,5 +1,15 @@
 <!--<%= @results %>-->
-<table class="table">
+<table class="table table-striped">
+  <thead>
+    <tr>
+   	  <th>Name</th>
+   	  <th>Phone</th>
+   	  <th>Date and time</th>
+   	  <th>Master</th>
+   	  <th>Color</th>
+    </tr>
+  </thead>
+  <tbody>
   <% @results.each do |row| %>
    <tr>
    	  <td><%= row['username'] %></td>
@@ -9,4 +19,5 @@
    	  <td><%= row['colorpicker'] %></td>
    </tr>
   <% end %>
+  </tbody>
 </table>
