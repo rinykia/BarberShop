@@ -3,6 +3,17 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
 
+def is_master_exists? db, name
+  db.execute('select * from Masters where name=?', [name]).length > 0
+end
+
+def seed_db db, masters
+  masters.each do |master|
+    if !is_master_exists? db, master
+      db.execute 'insert into Masters (name) values (?)', [master]
+    end
+  end
+end
 
 def get_db
   db = SQLite3::Database.new 'barbershop.db'
@@ -12,6 +23,7 @@ end
 
 configure do
   db = get_db
+
   db.execute 'CREATE TABLE IF NOT EXISTS
   "Users"
 	(
@@ -22,6 +34,16 @@ configure do
 	  "master" TEXT,
 	  "colorpicker" TEXT
 	)'
+
+  db.execute 'CREATE TABLE IF NOT EXISTS
+  "Masters"
+	(
+	  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+	  "name" TEXT
+	  
+	)'
+
+  seed_db db, ['Jessie Pen', 'Walter Clone', 'Messi Roe', 'Niko Boomdoo']
 end
 
 get '/' do
